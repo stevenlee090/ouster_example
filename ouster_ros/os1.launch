@@ -11,6 +11,7 @@
   <arg name="viz" default="false" doc="whether to run a simple visualizer"/>
   <arg name="image" default="false" doc="publish range/intensity/noise image topic"/>
   <arg name="tf_prefix" default="" doc="namespace for tf transforms"/>
+  <arg name="intensity_cap" default="" doc="maximum value to be rescaled down to 255"/>
 
   <node pkg="ouster_ros" name="os1_node" type="os1_node" output="screen" required="true">
     <param name="~/lidar_mode" type="string" value="$(arg lidar_mode)"/>
@@ -38,6 +39,7 @@
   <node if="$(arg image)" pkg="ouster_ros" name="img_node" type="img_node" output="screen" required="true">
     <remap from="~/os1_config" to="/os1_node/os1_config"/>
     <remap from="~/points" to="/os1_cloud_node/points"/>
+    <param name="~intensity_cap" type="int" value="1000"/>
   </node>
 
 </launch>
